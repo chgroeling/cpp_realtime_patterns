@@ -1,10 +1,10 @@
 // ------------------------------------------------------------------
-// Repository-Pattern in c/c++
+// DAO-Pattern in c/c++
 //
-// Implementation of repository pattern without dynamic memory allocation
+// Implementation of DAO pattern without dynamic memory allocation
 // using a conventional array.
 //
-// The entity intentionally does not contain complex data types
+// The Entity class intentionally does not contain complex data types
 // like std::string. These require dynamic memory allocation, which
 // is deliberately omitted.
 // ------------------------------------------------------------------
@@ -13,8 +13,8 @@
 
 struct Entity
 {
-    // This is the handle to the repository entry. -1 indicates not assigned.
-    // Never change this it is used by the repository. I currently have no
+    // This is the handle to the DAO internal storage structure. 
+    // Never change this it is used by the DAO. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
     // overhead. Do you?
     int internal_id;
@@ -27,6 +27,8 @@ struct Entity
 // This keeps it clean of business logic.
 Entity MakeEntity(int token, int data)
 {
+    // Attention: -1 is assigned to indicate that the object has no valid 
+    // index in a DAO.
     Entity f = {-1, token, data};
     return f;
 }
@@ -39,8 +41,8 @@ enum ReturnCode : int
     kSuccess = 1,
 };
 
-// Abstract interface to Entity repository class
-class IEntityRepository
+// Abstract interface to Entity DAO class
+class IEntityDAO
 {
 public:
     virtual ReturnCode Add(const Entity &entity) = 0;
@@ -53,10 +55,10 @@ public:
 //
 // - The array entities are not initialized because its not necessary but would be nice.
 //   You can add initialization code by yourself if needed.
-class EntityRepository : public IEntityRepository
+class EntityDAO : public IEntityDAO
 {
 public:
-    EntityRepository()
+    EntityDAO()
     {
         for (int i = 0; i < kMaxNumberOfEntities; i++)
         {
@@ -143,21 +145,21 @@ private:
 };
 
 // -------------------------------------------------
-// Client code ... uses Repository
+// Client code ... uses DAO
 // -------------------------------------------------
 void Client()
 {
 
     Entity entity, entity2;
-    EntityRepository repo;
+    EntityDAO dao;
 
-    // Add some entities to the repo
-    repo.Add(MakeEntity(10, 12));
-    repo.Add(MakeEntity(11, 13));
-    repo.Add(MakeEntity(12, 14));
+    // Add some entities to the dao
+    dao.Add(MakeEntity(10, 12));
+    dao.Add(MakeEntity(11, 13));
+    dao.Add(MakeEntity(12, 14));
 
     // Get Entity 1 with token 11
-    auto re = repo.GetFirstWithToken(11, entity);
+    auto re = dao.GetFirstWithToken(11, entity);
     printf("%i: %i %i\n", re, entity.token, entity.data);
 
     // only change the copy so far.
@@ -166,27 +168,27 @@ void Client()
 
     // Get Entity 2 with token 11. The result shouldn't have changed.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(11, entity2);
+    re = dao.GetFirstWithToken(11, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
     // Update the repo with the changes in entity 1
-    repo.Edit(entity);
+    dao.Edit(entity);
 
     // Get Entity 2 with token 11. This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(11, entity2);
+    re = dao.GetFirstWithToken(11, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
     // Get Entity 2 with token 15. This should return the changed entity.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(15, entity2);
+    re = dao.GetFirstWithToken(15, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
-    repo.Delete(entity); // this should now delete the corresponding entry.
+    dao.Delete(entity); // this should now delete the corresponding entry.
 
     // Get Entity 2 with token 15.  This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(15, entity2);
+    re = dao.GetFirstWithToken(15, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 }
 

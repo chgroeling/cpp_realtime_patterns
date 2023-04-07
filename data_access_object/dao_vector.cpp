@@ -1,10 +1,10 @@
 // ------------------------------------------------------------------
-// Repository-Pattern in c/c++
+// DAO-Pattern in c/c++
 //
-// Implementation of repository pattern with dynamic memory allocation
+// Implementation of DAO pattern with dynamic memory allocation
 // using std::vector.
 //
-// The entity intentionally does not contain complex data types
+// The Entity class intentionally does not contain complex data types
 // like std::string. These require dynamic memory allocation, which
 // is deliberately omitted.
 // ------------------------------------------------------------------
@@ -14,8 +14,8 @@
 
 struct Entity
 {
-    // This is the handle to the repository entry. 0 indicates not assigned.
-    // Never change this it is used by the repository. I currently have no
+    // This is the handle to the DAO internal storage structure. 
+    // Never change this it is used by the DAO. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
     // overhead. Do you?
     unsigned internal_id;
@@ -40,8 +40,8 @@ enum ReturnCode : int
 };
 
 
-// Abstract interface to Entity repository class
-class IEntityRepository {
+// Abstract interface to Entity DAO class
+class IEntityDAO {
 public:
     virtual ReturnCode Add(const Entity &entity) = 0;
     virtual ReturnCode Edit(const Entity &entity) =0;
@@ -55,7 +55,7 @@ public:
 // - It is assumed that the number of maximal ids (on 32bit 4294967294 unique ids)
 //   will never be exceeded. If this assumption breaks you have to add extra code
 //   to handle such cases.
-class EntityRepository  : public IEntityRepository
+class EntityDAO  : public IEntityDAO
 {
 public:
     ReturnCode Add(const Entity &entity) override
@@ -90,7 +90,7 @@ public:
 
             if (i_entity.internal_id == entity.internal_id)
             {
-                entities_.erase(entities_.begin() + i); // delete in repository
+                entities_.erase(entities_.begin() + i); // delete in DAO
                 return ReturnCode::kSuccess;
             }
         }
@@ -105,7 +105,7 @@ public:
 
             if (entity.token == token)
             {
-                out_entity = entity; // copy entry. This is a core tennent of the repository pattern.
+                out_entity = entity; // copy entry. This is a core tennent of the DAO pattern.
                 return ReturnCode::kSuccess;
             }
         }
@@ -118,21 +118,21 @@ private:
 };
 
 // -------------------------------------------------
-// Client code ... uses Repository
+// Client code ... uses DAO
 // -------------------------------------------------
 void Client()
 {
 
     Entity entity, entity2;
-    EntityRepository repo;
+    EntityDAO dao;
 
-    // Add some entities to the repo
-    repo.Add(MakeEntity(10, 12));
-    repo.Add(MakeEntity(11, 13));
-    repo.Add(MakeEntity(12, 14));
+    // Add some entities to the data access object
+    dao.Add(MakeEntity(10, 12));
+    dao.Add(MakeEntity(11, 13));
+    dao.Add(MakeEntity(12, 14));
 
     // Get Entity 1 with token 11
-    auto re = repo.GetFirstWithToken(11, entity);
+    auto re = dao.GetFirstWithToken(11, entity);
     printf("%i: %i %i\n", re, entity.token, entity.data);
 
     // only change the copy so far.
@@ -141,27 +141,27 @@ void Client()
 
     // Get Entity 2 with token 11. The result shouldn't have changed.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(11, entity2);
+    re = dao.GetFirstWithToken(11, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
     // Update the repo with the changes in entity 1
-    repo.Edit(entity);
+    dao.Edit(entity);
 
     // Get Entity 2 with token 11. This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(11, entity2);
+    re = dao.GetFirstWithToken(11, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
     // Get Entity 2 with token 15. This should return the changed entity.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(15, entity2);
+    re = dao.GetFirstWithToken(15, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 
-    repo.Delete(entity); // this should now delete the corresponding entry.
+    dao.Delete(entity); // this should now delete the corresponding entry.
 
     // Get Entity 2 with token 15.  This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
-    re = repo.GetFirstWithToken(15, entity2);
+    re = dao.GetFirstWithToken(15, entity2);
     printf("%i: %i %i\n", re, entity2.token, entity2.data);
 }
 

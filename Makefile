@@ -8,8 +8,8 @@ PATTERNS += state_pattern/state_pattern_shared_ptr
 PATTERNS += state_machine/state_machine_simple 
 PATTERNS += state_machine/state_machine_ptr2member
 
-PATTERNS += repository/repository_vector
-PATTERNS += repository/repository_static_array
+PATTERNS += data_access_object/dao_vector
+PATTERNS += data_access_object/dao_static_array
 
 # -----------------------------------------------
 # Options
