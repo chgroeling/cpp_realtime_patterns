@@ -11,6 +11,9 @@ PATTERNS += state_machine/state_machine_ptr2member
 PATTERNS += data_access_object/dao_vector
 PATTERNS += data_access_object/dao_static_array
 
+PATTERNS += tokenizer/tokenizer_simple
+
+
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
