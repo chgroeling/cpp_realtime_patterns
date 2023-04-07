@@ -45,10 +45,10 @@ enum ReturnCode : int
 class IEntityDAO
 {
 public:
-    virtual ReturnCode Add(const Entity &entity) = 0;
-    virtual ReturnCode Edit(const Entity &entity) = 0;
-    virtual ReturnCode Delete(const Entity &entity) = 0;
-    virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0;
+    virtual ReturnCode Add(const Entity &entity) = 0; // CRUD - C(reate)
+    virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0; // CRUD - R(ead)
+    virtual ReturnCode Edit(const Entity &entity) = 0; // CRUD - U(pdate)
+    virtual ReturnCode Delete(const Entity &entity) = 0; // CRUD - D(elete)
 };
 
 // Assumptions:

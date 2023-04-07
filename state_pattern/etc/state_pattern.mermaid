@@ -1,0 +1,30 @@
+classDiagram
+direction LR
+class Context
+Context: -IState state 
+Context: +Context(initial_state)
+Context: +ChangeState(state)
+Context: +DoThis()
+Context: +DoThat()
+
+class IState
+<<interface>> IState
+IState: +DoThis()
+IState: +DoThat()
+
+Context o-->IState
+
+class ConcreteState
+IState <|..  ConcreteState
+ConcreteState: +SetContext(context)
+ConcreteState: +DoThis()
+ConcreteState: +DoThat()
+
+note for ConcreteState "A state may issue a state
+transition in context:
+context.ChangeState(...)"
+
+class Client
+Client --> Context
+ConcreteState --> Context
+ConcreteState <.. Client

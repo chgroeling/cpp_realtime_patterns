@@ -14,7 +14,7 @@
 
 struct Entity
 {
-    // This is the handle to the DAO internal storage structure. 
+    // This is the handle to the DAO internal storage structure.
     // Never change this it is used by the DAO. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
     // overhead. Do you?
@@ -39,23 +39,22 @@ enum ReturnCode : int
     kSuccess = 1,
 };
 
-
 // Abstract interface to Entity DAO class
-class IEntityDAO {
+class IEntityDAO
+{
 public:
-    virtual ReturnCode Add(const Entity &entity) = 0;
-    virtual ReturnCode Edit(const Entity &entity) =0;
-    virtual ReturnCode Delete(const Entity &entity) = 0;
-    virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0;
+    virtual ReturnCode Add(const Entity &entity) = 0; // CRUD - C(reate)
+    virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0; // CRUD - R(ead)
+    virtual ReturnCode Edit(const Entity &entity) = 0; // CRUD - U(pdate)
+    virtual ReturnCode Delete(const Entity &entity) = 0; // CRUD - D(elete)
 };
-
 
 // Assumptions:
 //
 // - It is assumed that the number of maximal ids (on 32bit 4294967294 unique ids)
 //   will never be exceeded. If this assumption breaks you have to add extra code
 //   to handle such cases.
-class EntityDAO  : public IEntityDAO
+class EntityDAO : public IEntityDAO
 {
 public:
     ReturnCode Add(const Entity &entity) override
