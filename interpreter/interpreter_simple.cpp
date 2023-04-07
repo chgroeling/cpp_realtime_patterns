@@ -84,6 +84,33 @@ public:
         current_token_ = tokenizer_.NextToken();
     }
 
+    // Arithmetic expression parser / interpreter.
+    // expr   : term ((kPlus | kMinus) term)*
+    // term   : factor ((kMul | kDiv) factor)*
+    // factor : kInteger 
+    int expr()
+    {
+        
+        auto result = term();
+        while ((current_token_.token_type == kPlus) || (current_token_.token_type == kMinus))
+        {
+
+            if (current_token_.token_type == kPlus)
+            {
+                eat(kPlus);
+                result = result + term();
+            }
+            else if (current_token_.token_type == kMinus)
+            {
+                eat(kMinus);
+                result = result - term();
+            }
+        }
+
+        return result;
+    }
+
+private:
     // For the sake of simplicity just exit the program.
     void error()
     {
@@ -152,33 +179,6 @@ public:
         return result;
     }
 
-    // Arithmetic expression parser / interpreter.
-    // expr   : term ((kPlus | kMinus) term)*
-    // term   : factor ((kMul | kDiv) factor)*
-    // factor : kInteger 
-    int expr()
-    {
-        
-        auto result = term();
-        while ((current_token_.token_type == kPlus) || (current_token_.token_type == kMinus))
-        {
-
-            if (current_token_.token_type == kPlus)
-            {
-                eat(kPlus);
-                result = result + term();
-            }
-            else if (current_token_.token_type == kMinus)
-            {
-                eat(kMinus);
-                result = result - term();
-            }
-        }
-
-        return result;
-    }
-
-private:
     ITokenizer &tokenizer_;
     Token current_token_;
 };
