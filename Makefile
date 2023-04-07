@@ -8,14 +8,15 @@ PATTERNS += state_pattern/state_pattern_shared_ptr
 PATTERNS += state_machine/state_machine_simple 
 PATTERNS += state_machine/state_machine_ptr2member
 
-PATTERNS += repository/repository
+PATTERNS += repository/repository_vector
+PATTERNS += repository/repository_array
 
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
 GENERATE_BIN = y
 
-CC_FLAGS = -O2  -std=c++17
+CC_FLAGS = -O0 -std=c++17 -fno-exceptions
 
 TOOL_CHAIN_DIR =
 #TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
