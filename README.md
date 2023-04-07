@@ -1,11 +1,11 @@
 # Software design patterns in c++ with focus on realtime applications.
 
 ## Introduction
-Design patterns are typical solutions for common problems in software design. At least that's what most developers who "don't" deal with real-time programming think.
+Design patterns are typical solutions to common problems in software design. However, this is often misunderstood by developers who do not deal with real-time programming.
 
-Real-time programming (on low-level devices) is mainly done in C and C++. Computing time is often the limiting factor. Dynamic memory allocation is problematic if not forbidden in some places. Software pattern solutions are quickly discarded in favor of more efficient but often very tinkering-like solutions. Abstractions are wearily smiled at and quickly discarded as too inefficient.
+Real-time programming, especially on low-level devices, typically uses languages such as C and C++. Computing time is often a limiting factor, and dynamic memory allocation can be problematic or even forbidden in some cases. In these situations, software pattern solutions are often discarded in favor of more efficient, but often ad-hoc solutions. Abstractions are viewed skeptically and are quickly rejected as too inefficient.
 
-This repo is not intended to reproduce the 1000th repetition of software patterns this time in C++. Instead, I will try to reproduce the common software design patterns in a way that they are suitable for this form of programming.
+This repository is not intended to provide yet another iteration of software patterns, but instead aims to adapt common software design patterns for use in real-time programming environments.
 
 ## Assumptions
 * This repo contains only C++ code. Patterns implemented in C are not part of this repo. 
