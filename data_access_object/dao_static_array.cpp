@@ -9,7 +9,7 @@
 // is deliberately omitted.
 // ------------------------------------------------------------------
 
-#include <stdio.h>
+#include <iostream>
 
 struct Entity
 {
@@ -162,7 +162,7 @@ void Client()
 
     // Get Entity 1 with token 11
     auto re = dao.GetFirstWithToken(11, entity);
-    printf("%i: %i %i\n", re, entity.token, entity.data);
+    std::cout << re << ": " << entity.token << " " << entity.data << std::endl;
 
     // only change the copy so far.
     entity.token = 15;
@@ -171,7 +171,7 @@ void Client()
     // Get Entity 2 with token 11. The result shouldn't have changed.
     entity2 = MakeEntity(0, 0);
     re = dao.GetFirstWithToken(11, entity2);
-    printf("%i: %i %i\n", re, entity2.token, entity2.data);
+    std::cout << re << ": " << entity2.token << " " << entity2.data << std::endl;
 
     // Update the repo with the changes in entity 1
     dao.Edit(entity);
@@ -179,19 +179,19 @@ void Client()
     // Get Entity 2 with token 11. This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
     re = dao.GetFirstWithToken(11, entity2);
-    printf("%i: %i %i\n", re, entity2.token, entity2.data);
+    std::cout << re << ": " << entity2.token << " " << entity2.data << std::endl;
 
     // Get Entity 2 with token 15. This should return the changed entity.
     entity2 = MakeEntity(0, 0);
     re = dao.GetFirstWithToken(15, entity2);
-    printf("%i: %i %i\n", re, entity2.token, entity2.data);
+    std::cout << re << ": " << entity2.token << " " << entity2.data << std::endl;
 
     dao.Delete(entity); // this should now delete the corresponding entry.
 
     // Get Entity 2 with token 15.  This shouldn't exists anymore.
     entity2 = MakeEntity(0, 0);
     re = dao.GetFirstWithToken(15, entity2);
-    printf("%i: %i %i\n", re, entity2.token, entity2.data);
+    std::cout << re << ": " << entity2.token << " " << entity2.data << std::endl;
 }
 
 int main()

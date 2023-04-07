@@ -4,7 +4,7 @@
 // Implementation of a turnstil. State transistion indicated by enum
 // State code reached by "if", "else"
 // ------------------------------------------------------------------
-#include <stdio.h>
+#include <iostream>
 
 // -------------------------------------------------
 // State enum
@@ -43,22 +43,22 @@ public:
 private:
     void StateLocked_Coin() {
         actual_state_ = kUnlockedState;
-        printf("LockedState: Inserting Coin -> State transition\n");
+        std::cout << "LockedState: Inserting Coin -> State transition" << std::endl;
     }
 
     void StateUnlocked_Coin() {
         actual_state_ = kUnlockedState;
-        printf("UnlockedState: Inserting Coin -> Coin was already inserted.\n");
+        std::cout << "UnlockedState: Inserting Coin -> Coin was already inserted." << std::endl;
     }
  
     void StateLocked_Push() {
         actual_state_ = kLockedState;
-        printf("LockedState: Go through turnstil -> LOCKED !!!\n");
+        std::cout << "LockedState: Go through turnstil -> LOCKED !!!" << std::endl;
     }
 
     void StateUnlocked_Push() {
         actual_state_ = kLockedState;
-        printf("UnlockedState:  Go through turnstil. -> State Transition.\n");
+        std::cout << "UnlockedState:  Go through turnstil. -> State Transition." << std::endl;
     }
 
     StateId actual_state_ = kLockedState;

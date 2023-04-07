@@ -3,7 +3,7 @@
 //
 // Implementation of a turnstil. State transistion indicated by enum
 // ------------------------------------------------------------------
-#include <stdio.h>
+#include <iostream>
 
 // -------------------------------------------------
 // State interface definition
@@ -118,11 +118,11 @@ void LockedConcreteState::SetContext(Context* context) {
 }
 
 void LockedConcreteState::Push() {
-    printf("LockedState: Go through turnstil -> LOCKED !!!\n");
+    std::cout << "LockedState: Go through turnstil -> LOCKED !!!" << std::endl;
 }
 
 void LockedConcreteState::Coin() {
-    printf("LockedState: Inserting Coin -> State transition\n");
+    std::cout << "LockedState: Inserting Coin -> State transition" << std::endl;
     context_->ChangeState(StateId::kUnlockedState);
 }
 
@@ -141,12 +141,12 @@ void UnlockedConcreteState::SetContext(Context* context) {
 }
 
 void UnlockedConcreteState::Push() {
-    printf("UnlockedState: Go through turnstil. -> State Transition\n");
+    std::cout << "UnlockedState: Go through turnstil. -> State Transition" << std::endl;
     context_->ChangeState(StateId::kLockedState);
 }
 
 void UnlockedConcreteState::Coin() {
-    printf("UnlockedState: Inserting Coin -> Coin was already inserted.\n");
+    std::cout << "UnlockedState: Inserting Coin -> Coin was already inserted." << std::endl;
 }
 
 // -------------------------------------------------
