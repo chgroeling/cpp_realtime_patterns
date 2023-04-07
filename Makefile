@@ -16,10 +16,11 @@ PATTERNS += repository/repository_array
 # -----------------------------------------------
 GENERATE_BIN = y
 
-CC_FLAGS = -O0 -std=c++17 -fno-exceptions
+CC_FLAGS = -O0 -g -std=c++17 -fno-exceptions
 
 TOOL_CHAIN_DIR =
 #TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
+TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
 
 TOOL_CHAIN_POSTFIX = 
 #TOOL_CHAIN_POSTFIX = arm-none-eabi-

@@ -10,16 +10,14 @@
 // ------------------------------------------------------------------
 
 #include <stdio.h>
-#include <vector>
-#include <limits>
 
 struct Entity
 {
-    // This is the handle to the repository entry. 0 indicates not assigned.
+    // This is the handle to the repository entry. -1 indicates not assigned.
     // Never change this it is used by the repository. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
     // overhead. Do you?
-    unsigned internal_id;
+    int internal_id;
 
     int token;
     int data;
@@ -29,7 +27,7 @@ struct Entity
 // This keeps it clean of business logic.
 Entity MakeEntity(int token, int data)
 {
-    Entity f = {0, token, data};
+    Entity f = {-1, token, data};
     return f;
 }
 
@@ -42,20 +40,18 @@ enum ReturnCode : int
 };
 
 // Abstract interface to Entity repository class
-class IEntityRepository {
+class IEntityRepository
+{
 public:
     virtual ReturnCode Add(const Entity &entity) = 0;
-    virtual ReturnCode Edit(const Entity &entity) =0;
+    virtual ReturnCode Edit(const Entity &entity) = 0;
     virtual ReturnCode Delete(const Entity &entity) = 0;
     virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0;
 };
 
 // Assumptions:
 //
-// - It is assumed that the number of maximal ids (on 32bit 4294967294 unique ids)
-//   will never be exceeded. If this assumption breaks you have to add extra 
-//   code to handle such cases.
-// - The array entities are not initialized because its not necessary but would be nice. 
+// - The array entities are not initialized because its not necessary but would be nice.
 //   You can add initialization code by yourself if needed.
 class EntityRepository : public IEntityRepository
 {
@@ -67,49 +63,44 @@ public:
             entities_[i].internal_id = kUnusedId; // assign unused id
         }
     }
+
     ReturnCode Add(const Entity &entity) override
     {
+        // no check of internal id here because it will only be assigned.
         Entity *own;
-        auto ret = SearchFreeSlot(&own);
+        int idx;
+
+        auto ret = SearchFreeSlot(/*out*/ idx, &own);
         if (ret != ReturnCode::kSuccess)
         {
             return ret; // propagate return value;
         }
 
         *own = entity; // copy it to internal data structure
-        own->internal_id = internal_id_counter_;
-        internal_id_counter_++;
+        own->internal_id = idx; // set internal id to index
         return ReturnCode::kSuccess;
     }
 
     ReturnCode Edit(const Entity &entity) override
     {
-        for (int i = 0u; i < kMaxNumberOfEntities; i++)
+        if ((entity.internal_id < 0) && (entity.internal_id >= kMaxNumberOfEntities))
         {
-            auto &i_entity = entities_[i];
-
-            if (i_entity.internal_id == entity.internal_id)
-            {
-                entities_[i] = entity; // copy
-                return ReturnCode::kSuccess;
-            }
+            return ReturnCode::kNotFound;
         }
-        return ReturnCode::kNotFound;
+
+        entities_[entity.internal_id] = entity; // copy
+        return ReturnCode::kSuccess;
     }
 
     ReturnCode Delete(const Entity &entity) override
     {
-        for (int i = 0u; i < kMaxNumberOfEntities; i++)
+        if ((entity.internal_id < 0) && (entity.internal_id >= kMaxNumberOfEntities))
         {
-            auto &i_entity = entities_[i];
-
-            if (i_entity.internal_id == entity.internal_id)
-            {
-                entities_[i].internal_id = kUnusedId;
-                return ReturnCode::kSuccess;
-            }
+            return ReturnCode::kNotFound;
         }
-        return ReturnCode::kNotFound;
+
+        entities_[entity.internal_id].internal_id = kUnusedId;
+        return ReturnCode::kSuccess;
     }
 
     // Example getter. One can add as much as needed.
@@ -129,26 +120,25 @@ public:
     }
 
 private:
-    inline ReturnCode SearchFreeSlot(Entity **entity)
+    inline ReturnCode SearchFreeSlot(int &idx, Entity **entity)
     {
-        for (unsigned i = 0u; i < kMaxNumberOfEntities; i++)
+        for (int i = 0; i < kMaxNumberOfEntities; i++)
         {
             if (entities_[i].internal_id == kUnusedId) // indicates a free slot
             {
                 *entity = &entities_[i];
+                idx = i;
                 return ReturnCode::kSuccess;
             }
         }
         return ReturnCode::kPoolExceeded;
     }
-    
-    static constexpr unsigned kUnusedId = std::numeric_limits<unsigned>::max(); // use maximal number to flag an id as unused
-    static constexpr unsigned kMaxNumberOfEntities = 10u; //< maximal number of storeable entities. 
 
-    unsigned internal_id_counter_ = 1u; // start with id 1. Zero is the initialized state
+    static constexpr int kUnusedId = -1; // use negative value as unused id
+    static constexpr int kMaxNumberOfEntities = 10;  // maximal number of storeable entities.
 
-    // Statically allocate a pool of entities. This will throw away memory if to high and 
-    // leads to loots of problems if set to low ;-)
+    // Statically allocate a pool of entities. This will throw away memory if too high and
+    // leads to lots of problems if set to low ;-)
     Entity entities_[kMaxNumberOfEntities];
 };
 
