@@ -1,8 +1,8 @@
-// --------------------------------------------------------------
+// ------------------------------------------------------------------
 // State pattern example in c++
 //
 // Implementation of a turnstil. State transistion indicated by enum
-// --------------------------------------------------------------
+// ------------------------------------------------------------------
 #include <stdio.h>
 
 // -------------------------------------------------
@@ -24,8 +24,8 @@ class Context;
 // State enum
 // -------------------------------------------------
 enum StateId {
-    kLockState,
-    kUnlockState
+    kLockedState,
+    kUnlockedState
 };
 
 // -------------------------------------------------
@@ -83,11 +83,11 @@ Context::Context(StateId state_id) {
 
 void Context::ChangeState(StateId state_id) {
     switch (state_id) {
-        case kLockState:
+        case kLockedState:
             state_ = &locked_state;
         break;
 
-        case kUnlockState:
+        case kUnlockedState:
             state_ = &unlocked_state;
         break;
     }
@@ -112,12 +112,12 @@ void LockedConcreteState::SetContext(Context* context) {
 }
 
 void LockedConcreteState::Push() {
-    printf("  LockedConcreteState: Go through turnstil -> LOCKED !!!\n");
+    printf("LockedState: Go through turnstil -> LOCKED !!!\n");
 }
 
 void LockedConcreteState::Coin() {
-    printf("  LockedConcreteState: Inserting Coin -> State transition\n");
-    context_->ChangeState(StateId::kUnlockState);
+    printf("LockedState: Inserting Coin -> State transition\n");
+    context_->ChangeState(StateId::kUnlockedState);
 }
 
 // -------------------------------------------------
@@ -131,19 +131,19 @@ void UnlockedConcreteState::SetContext(Context* context) {
 }
 
 void UnlockedConcreteState::Push() {
-    printf("UnlockedConcreteState: Go through turnstil. -> State Transition\n");
-    context_->ChangeState(StateId::kLockState);
+    printf("UnlockedState: Go through turnstil. -> State Transition\n");
+    context_->ChangeState(StateId::kLockedState);
 }
 
 void UnlockedConcreteState::Coin() {
-    printf("UnlockedConcreteState: Inserting Coin -> Coin was already insertd.\n");
+    printf("UnlockedState: Inserting Coin -> Coin was already inserted.\n");
 }
 
 // -------------------------------------------------
 // CLient code ... uses context
 // -------------------------------------------------
 void Client() {
-    Context context(kLockState);
+    Context context(kLockedState);
 
     // Person A        
     context.Push(); // locked

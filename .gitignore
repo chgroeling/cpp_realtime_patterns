@@ -32,4 +32,4 @@
 *.app
 
 # Disassembled files
-asm/*.s
+*.s

@@ -1,8 +1,8 @@
-// --------------------------------------------------------------
+// ------------------------------------------------------------------
 // State pattern example in c++
 //
 // Implementation of a turnstil. State transistion by object.
-// --------------------------------------------------------------
+// ------------------------------------------------------------------
 
 #include <stdio.h>
 #include <memory> // use smart pointer in this example
@@ -91,11 +91,11 @@ void LockedConcreteState::SetContext(std::shared_ptr<Context> context) {
 }
 
 void LockedConcreteState::Push() {
-    printf("  LockedConcreteState: Go through turnstil -> LOCKED !!!\n");
+    printf("LockedState: Go through turnstil -> LOCKED !!!\n");
 }
 
 void LockedConcreteState::Coin() {
-    printf("  LockedConcreteState: Inserting Coin -> State transition\n");
+    printf("LockedState: Inserting Coin -> State transition\n");
     auto unlocked_state = std::make_shared<UnlockedConcreteState>();
     unlocked_state->SetContext(context_);
     context_->ChangeState(unlocked_state);
@@ -112,14 +112,14 @@ void UnlockedConcreteState::SetContext(std::shared_ptr<Context> context) {
 }
 
 void UnlockedConcreteState::Push() {
-    printf("UnlockedConcreteState: Go through turnstil. -> State Transition\n");
+    printf("UnlockedState: Go through turnstil. -> State Transition\n");
     auto locked_state = std::make_shared<LockedConcreteState>();
     locked_state->SetContext(context_);
     context_->ChangeState(locked_state);
 }
 
 void UnlockedConcreteState::Coin() {
-    printf("UnlockedConcreteState: Inserting Coin -> Coin was already insertd.\n");
+    printf("UnlockedState: Inserting Coin -> Coin was already insertd.\n");
 }
 
 // -------------------------------------------------

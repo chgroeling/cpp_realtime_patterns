@@ -5,6 +5,8 @@ PATTERNS =
 PATTERNS += state_pattern/state_pattern_enum 
 PATTERNS += state_pattern/state_pattern_shared_ptr 
 
+PATTERNS += state_machine/state_machine_simple 
+
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
