@@ -14,6 +14,9 @@ PATTERNS += data_access_object/dao_static_array
 PATTERNS += tokenizer/tokenizer_simple
 PATTERNS += interpreter/interpreter_simple
 
+PATTERNS += observer/observer_vector
+PATTERNS += observer/observer_array
+
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
@@ -26,7 +29,7 @@ CC_FLAGS = -O0 -g -std=c++17 -fno-exceptions
 # This variable must contain the path to a valid gcc toolchain
 TOOL_CHAIN_DIR =
 # TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
-TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
+# TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
 
 # This variable is added as a postfix to each call of a toolchain tool.
 TOOL_CHAIN_POSTFIX = 
