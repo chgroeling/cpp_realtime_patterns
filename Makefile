@@ -15,8 +15,8 @@ PATTERNS += tokenizer/tokenizer_simple
 
 PATTERNS += interpreter_pattern/interpreter_simple
 
-PATTERNS += observer/observer_vector
-PATTERNS += observer/observer_array
+PATTERNS += observer_pattern/observer_vector
+PATTERNS += observer_pattern/observer_array
 
 # -----------------------------------------------
 # Options
