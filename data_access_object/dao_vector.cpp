@@ -63,7 +63,7 @@ public:
         own.internal_id = internal_id_counter_; // assign internal_id
         entities_.push_back(std::move(own));
         internal_id_counter_++;
-        return ReturnCode::kSuccess;
+        return kSuccess;
     }
 
     ReturnCode Edit(const Entity &entity) override
@@ -75,10 +75,10 @@ public:
             if (i_entity.internal_id == entity.internal_id)
             {
                 entities_[i] = entity; // copy
-                return ReturnCode::kSuccess;
+                return kSuccess;
             }
         }
-        return ReturnCode::kNotFound;
+        return kNotFound;
     }
 
     ReturnCode Delete(const Entity &entity) override
@@ -90,10 +90,10 @@ public:
             if (i_entity.internal_id == entity.internal_id)
             {
                 entities_.erase(entities_.begin() + i); // delete in DAO
-                return ReturnCode::kSuccess;
+                return kSuccess;
             }
         }
-        return ReturnCode::kNotFound;
+        return kNotFound;
     }
 
     ReturnCode GetFirstWithToken(int token, Entity &out_entity) const override
@@ -105,10 +105,10 @@ public:
             if (entity.token == token)
             {
                 out_entity = entity; // copy entry. This is a core tennent of the DAO pattern.
-                return ReturnCode::kSuccess;
+                return kSuccess;
             }
         }
-        return ReturnCode::kNotFound;
+        return kNotFound;
     }
 
 private:

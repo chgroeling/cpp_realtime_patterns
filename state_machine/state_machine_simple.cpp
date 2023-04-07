@@ -2,7 +2,7 @@
 // State machine in c/c++
 //
 // Implementation of a turnstil. State transistion indicated by enum
-// Transitions by "if", "else"
+// State code reached by "if", "else"
 // ------------------------------------------------------------------
 #include <stdio.h>
 

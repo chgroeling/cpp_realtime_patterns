@@ -14,16 +14,20 @@ PATTERNS += data_access_object/dao_static_array
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
-GENERATE_BIN = n
+
+# If "y" executable binaries will be built. 
+GENERATE_BIN = y
 
 CC_FLAGS = -O0 -g -std=c++17 -fno-exceptions
 
+# This variable must contain the path to a valid gcc toolchain
 TOOL_CHAIN_DIR =
-TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
-#TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
+# TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
+TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
 
+# This variable is added as a postfix to each call of a toolchain tool.
 TOOL_CHAIN_POSTFIX = 
-TOOL_CHAIN_POSTFIX = arm-none-eabi-
+#TOOL_CHAIN_POSTFIX = arm-none-eabi-
 
 # Compiler
 CC = $(TOOL_CHAIN_DIR)$(TOOL_CHAIN_POSTFIX)g++

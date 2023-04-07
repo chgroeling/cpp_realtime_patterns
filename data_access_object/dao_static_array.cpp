@@ -73,36 +73,36 @@ public:
         int idx;
 
         auto ret = SearchFreeSlot(/*out*/ idx, &own);
-        if (ret != ReturnCode::kSuccess)
+        if (ret != kSuccess)
         {
             return ret; // propagate return value;
         }
 
         *own = entity; // copy it to internal data structure
         own->internal_id = idx; // set internal id to index
-        return ReturnCode::kSuccess;
+        return kSuccess;
     }
 
     ReturnCode Edit(const Entity &entity) override
     {
         if ((entity.internal_id < 0) && (entity.internal_id >= kMaxNumberOfEntities))
         {
-            return ReturnCode::kNotFound;
+            return kNotFound;
         }
 
         entities_[entity.internal_id] = entity; // copy
-        return ReturnCode::kSuccess;
+        return kSuccess;
     }
 
     ReturnCode Delete(const Entity &entity) override
     {
         if ((entity.internal_id < 0) && (entity.internal_id >= kMaxNumberOfEntities))
         {
-            return ReturnCode::kNotFound;
+            return kNotFound;
         }
 
         entities_[entity.internal_id].internal_id = kUnusedId;
-        return ReturnCode::kSuccess;
+        return kSuccess;
     }
 
     // Example getter. One can add as much as needed.
@@ -115,10 +115,10 @@ public:
             if ((entity.token == token) && (entity.internal_id != kUnusedId))
             {
                 out_entity = entity; // copy
-                return ReturnCode::kSuccess;
+                return kSuccess;
             }
         }
-        return ReturnCode::kNotFound;
+        return kNotFound;
     }
 
 private:
@@ -130,10 +130,10 @@ private:
             {
                 *entity = &entities_[i];
                 idx = i;
-                return ReturnCode::kSuccess;
+                return kSuccess;
             }
         }
-        return ReturnCode::kPoolExceeded;
+        return kPoolExceeded;
     }
 
     static constexpr int kUnusedId = -1; // use negative value as unused id

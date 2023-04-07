@@ -2,7 +2,8 @@
 // State machine in c/c++
 //
 // Implementation of a turnstil. State transistion indicated by enum
-// Transitions by "if", "else"
+// State code reached by pointer to class member. Pointers can be stored
+// in a table which makes this approach a bit more flexible.
 // ------------------------------------------------------------------
 #include <stdio.h>
 
@@ -19,10 +20,18 @@ enum StateId
 class StateMachine
 {
 public:
-    StateMachine(StateId state_id) {
-        actual_state_ = state_id;
+    StateMachine(StateId state_id)
+    {
+        if (state_id == kNumStates)
+        {
+            actual_state_ = kLockedState;
+        }
+        else
+        {
+            actual_state_ = state_id;
+        }
     }
-    
+
     void Push()
     {
         (this->*push_members[actual_state_])();
@@ -34,38 +43,41 @@ public:
     }
 
 private:
-    void StateLocked_Coin() {
+    void StateLocked_Coin()
+    {
         actual_state_ = kUnlockedState;
         printf("LockedState: Inserting Coin -> State transition\n");
     }
 
-    void StateUnlocked_Coin() {
+    void StateUnlocked_Coin()
+    {
         actual_state_ = kUnlockedState;
         printf("UnlockedState: Inserting Coin -> Coin was already inserted.\n");
     }
- 
-    void StateLocked_Push() {
+
+    void StateLocked_Push()
+    {
         actual_state_ = kLockedState;
         printf("LockedState: Go through turnstil -> LOCKED !!!\n");
     }
 
-    void StateUnlocked_Push() {
+    void StateUnlocked_Push()
+    {
         actual_state_ = kLockedState;
         printf("UnlockedState:  Go through turnstil. -> State Transition.\n");
     }
 
-    using push_type = void (StateMachine::*)();          
+    using push_type = void (StateMachine::*)();
 
-
+    // List every possible implementation of push() for each state
     push_type push_members[kNumStates] = {
         &StateMachine::StateLocked_Push,
-        &StateMachine::StateUnlocked_Push
-    };
+        &StateMachine::StateUnlocked_Push};
 
+    // List every possible implementation of coin() for each state
     push_type coin_members[kNumStates] = {
         &StateMachine::StateLocked_Coin,
-        &StateMachine::StateUnlocked_Coin
-    };
+        &StateMachine::StateUnlocked_Coin};
 
     StateId actual_state_ = kLockedState;
 };
@@ -73,17 +85,18 @@ private:
 // -------------------------------------------------
 // CLient code ... uses statemachine
 // -------------------------------------------------
-void Client() {
+void Client()
+{
     StateMachine sm(kLockedState);
 
-    // Person A        
+    // Person A
     sm.Push(); // locked
     sm.Coin(); // insert coin - ok
     sm.Coin(); // insert another coin - not ok
     sm.Push(); // go through
 
     // Person B
-    sm.Push(); // locked 
+    sm.Push(); // locked
 }
 
 int main()
