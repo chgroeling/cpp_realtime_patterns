@@ -4,7 +4,6 @@
 // Implementation of a turnstil. State transistion indicated by enum
 // --------------------------------------------------------------
 #include <stdio.h>
-#include <memory> // use smart pointer in this example
 
 // -------------------------------------------------
 // State interface definition
