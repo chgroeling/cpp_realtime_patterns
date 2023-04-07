@@ -8,7 +8,7 @@ PATTERNS += state_pattern_shared_ptr
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
-GENERATE_BIN = #y
+GENERATE_BIN = y
 
 CC_FLAGS = -O0
 
