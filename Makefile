@@ -9,21 +9,21 @@ PATTERNS += state_machine/state_machine_simple
 PATTERNS += state_machine/state_machine_ptr2member
 
 PATTERNS += repository/repository_vector
-PATTERNS += repository/repository_array
+PATTERNS += repository/repository_static_array
 
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
-GENERATE_BIN = y
+GENERATE_BIN = n
 
 CC_FLAGS = -O0 -g -std=c++17 -fno-exceptions
 
 TOOL_CHAIN_DIR =
-#TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
-TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
+TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
+#TOOL_CHAIN_DIR = C:/Tools/atk-20.08/MinGW/bin/
 
 TOOL_CHAIN_POSTFIX = 
-#TOOL_CHAIN_POSTFIX = arm-none-eabi-
+TOOL_CHAIN_POSTFIX = arm-none-eabi-
 
 # Compiler
 CC = $(TOOL_CHAIN_DIR)$(TOOL_CHAIN_POSTFIX)g++
