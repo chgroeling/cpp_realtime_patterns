@@ -1,7 +1,7 @@
-# Interpreter 
+# Interpreter-Pattern
 
 ## Intent
-An interpreter executes a sequence of instructions directly, where the format of the instructions is predetermined. 
+An interpreter is translating and executing a custom sequence of instructions defined by the programmer. By processing each instruction individually and performing its associated operation in real-time, the interpreter pattern allows for efficient and adaptable execution of user-defined languages.
 
 ## Notes
 * Normally, an interpreter is used together with a tokenizer. However, this must not necessarily be the case. To keep the examples simple, I have deliberately dispensed with a tokeniser and instead simply defined a token sequence in an array.

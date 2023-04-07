@@ -12,7 +12,8 @@ PATTERNS += data_access_object/dao_vector
 PATTERNS += data_access_object/dao_static_array
 
 PATTERNS += tokenizer/tokenizer_simple
-PATTERNS += interpreter/interpreter_simple
+
+PATTERNS += interpreter_pattern/interpreter_simple
 
 PATTERNS += observer/observer_vector
 PATTERNS += observer/observer_array
