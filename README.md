@@ -12,7 +12,12 @@ This repo is not intended to reproduce the 1000th repetition of software pattern
 * This repo contains only C++ code. Patterns implemented in C are not part of this repo. 
 * Dynamic memory allocation is largely avoided.
 * No exceptions will be used. They have a huge performance and memory impact and are not suitable for low-end embedded devices.
-* Since these are examples, we try to use template metaprogramming sparingly as it often makes the code more incomprehensible.
+* Since these are examples, I try to use template metaprogramming sparingly as it often makes the code more incomprehensible.
+
+## Usage
+Each pattern is contained in a stand-alone cpp file. They can therefore be compiled directly on [Compiler explorer](https://godbolt.org/) without further dependencies. Just copy and past it!
+
+Furthermore is a Makefile that compiles each pattern with a "gnu" compiler. This Makefile also creates a dissassembly of each pattern object file. It is really amazing what a compiler does without the knowledge of its users. Have a look!
 
 ## Credits
-* This repo is largely inspired by (java-design-patterns)[https://github.com/iluwatar/java-design-patterns].
+* This repo is largely inspired by [java-design-patterns](https://github.com/iluwatar/java-design-patterns).

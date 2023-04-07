@@ -1,1 +1,3 @@
 # State patterns
+
+## Intent
