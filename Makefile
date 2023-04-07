@@ -2,8 +2,8 @@
 # Available patterns
 # -----------------------------------------------
 PATTERNS =
-PATTERNS += state_pattern_enum 
-PATTERNS += state_pattern_shared_ptr 
+PATTERNS += state_pattern/state_pattern_enum 
+PATTERNS += state_pattern/state_pattern_shared_ptr 
 
 # -----------------------------------------------
 # Options
@@ -42,9 +42,11 @@ define GENERATE_BIN_TARGET
 $(1) : ${BIN_DIR}/$(1).exe 
 endef
 
+PATTERNS_DIRS = $(dir $(PATTERNS))
 .PHONY: all clean directories $(PATTERNS)
 
 all: directories $(PATTERNS)
+	
 
 # Generate targets for each pattern
 $(foreach i,$(PATTERNS),$(eval $(call GENERATE_OBJ_TARGET,$(i)))) 
@@ -79,12 +81,15 @@ directories: ${BIN_DIR} ${OBJ_DIR} ${ASM_DIR}
 
 ${BIN_DIR}:
 	${MKDIR_P} ${BIN_DIR}
+	${MKDIR_P} $(sort $(addprefix ${BIN_DIR}/,$(dir $(PATTERNS))))
 
 ${OBJ_DIR}:
 	${MKDIR_P} ${OBJ_DIR}
+	${MKDIR_P} $(sort $(addprefix ${OBJ_DIR}/,$(dir $(PATTERNS))))
 
 ${ASM_DIR}:
 	${MKDIR_P} ${ASM_DIR}
+	${MKDIR_P} $(sort $(addprefix ${ASM_DIR}/,$(dir $(PATTERNS))))
 
 
 
