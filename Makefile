@@ -6,13 +6,14 @@ PATTERNS += state_pattern/state_pattern_enum
 PATTERNS += state_pattern/state_pattern_shared_ptr 
 
 PATTERNS += state_machine/state_machine_simple 
+PATTERNS += state_machine/state_machine_ptr2member
 
 # -----------------------------------------------
 # Options
 # -----------------------------------------------
 GENERATE_BIN = y
 
-CC_FLAGS = -O0
+CC_FLAGS = -O0  -std=c++17
 
 TOOL_CHAIN_DIR =
 #TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/
@@ -49,7 +50,6 @@ PATTERNS_DIRS = $(dir $(PATTERNS))
 
 all: directories $(PATTERNS)
 	
-
 # Generate targets for each pattern
 $(foreach i,$(PATTERNS),$(eval $(call GENERATE_OBJ_TARGET,$(i)))) 
 $(foreach i,$(PATTERNS),$(eval $(call GENERATE_ASM_TARGET,$(i)))) 
