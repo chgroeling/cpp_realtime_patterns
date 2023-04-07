@@ -1,0 +1,25 @@
+classDiagram
+direction LR
+class Entity
+Entity: +int internal_id
+Entity: +int token
+Entity: +int data
+
+class EntityDAO
+EntityDAO: +Add(const Entity& entity)
+EntityDAO: +Edit(const Entity& entity)
+EntityDAO: +Delete(const Entity& entity)
+EntityDAO: +Entity Get*(criteria)
+
+EntityDAO o--Entity
+
+class IEntityDAO
+<<interface>> IEntityDAO
+IEntityDAO: +Add(const Entity& entity)
+IEntityDAO: +Edit(const Entity& entity)
+IEntityDAO: +Delete(const Entity& entity)
+IEntityDAO: +Entity Get*(criteria)
+
+IEntityDAO -->Entity
+
+EntityDAO ..|>IEntityDAO
