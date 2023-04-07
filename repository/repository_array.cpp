@@ -18,7 +18,7 @@ struct Entity
     // This is the handle to the repository entry. 0 indicates not assigned.
     // Never change this it is used by the repository. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
-    // overhead.
+    // overhead. Do you?
     unsigned internal_id;
 
     int token;
@@ -53,7 +53,8 @@ public:
 // Assumptions:
 //
 // - It is assumed that the number of maximal ids (on 32bit 4294967294 unique ids)
-//   will never be exceeded.
+//   will never be exceeded. If this assumption breaks you have to add extra 
+//   code to handle such cases.
 // - The array entities are not initialized because its not necessary but would be nice. 
 //   You can add initialization code by yourself if needed.
 class EntityRepository : public IEntityRepository
@@ -75,7 +76,7 @@ public:
             return ret; // propagate return value;
         }
 
-        *own = entity;
+        *own = entity; // copy it to internal data structure
         own->internal_id = internal_id_counter_;
         internal_id_counter_++;
         return ReturnCode::kSuccess;
@@ -142,10 +143,12 @@ private:
     }
     
     static constexpr unsigned kUnusedId = std::numeric_limits<unsigned>::max(); // use maximal number to flag an id as unused
-    static constexpr unsigned kMaxNumberOfEntities = 10u;
+    static constexpr unsigned kMaxNumberOfEntities = 10u; //< maximal number of storeable entities. 
 
     unsigned internal_id_counter_ = 1u; // start with id 1. Zero is the initialized state
 
+    // Statically allocate a pool of entities. This will throw away memory if to high and 
+    // leads to loots of problems if set to low ;-)
     Entity entities_[kMaxNumberOfEntities];
 };
 

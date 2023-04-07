@@ -17,7 +17,7 @@ struct Entity
     // This is the handle to the repository entry. 0 indicates not assigned.
     // Never change this it is used by the repository. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
-    // overhead.
+    // overhead. Do you?
     unsigned internal_id;
 
     int token;
@@ -53,7 +53,8 @@ public:
 // Assumptions:
 //
 // - It is assumed that the number of maximal ids (on 32bit 4294967294 unique ids)
-//   will never be exceeded.
+//   will never be exceeded. If this assumption breaks you have to add extra code
+//   to handle such cases.
 class EntityRepository  : public IEntityRepository
 {
 public:
