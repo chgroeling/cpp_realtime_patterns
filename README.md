@@ -1,4 +1,4 @@
-# Design Patterns implemented in C++ for realtime-applications
+# Software design patterns in c++ with focus on realtime applications.
 
 ## Introduction
 Design patterns are typical solutions for common problems in software design. At least that's what most developers who "don't" deal with real-time programming think.
