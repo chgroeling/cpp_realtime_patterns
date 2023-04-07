@@ -2,6 +2,7 @@
 // State machine in c/c++
 //
 // Implementation of a turnstil. State transistion indicated by enum
+// Transitions by "if", "else"
 // ------------------------------------------------------------------
 #include <stdio.h>
 
@@ -18,12 +19,12 @@ class StateMachine
 {
 public:
     StateMachine(StateId state_id) {
-        _actual_state = state_id;
+        actual_state_ = state_id;
     }
     
     void Push()
     {
-        if (_actual_state == kLockedState) {
+        if (actual_state_ == kLockedState) {
             StateLocked_Push();
         } else {
             StateUnlocked_Push();
@@ -32,7 +33,7 @@ public:
 
     void Coin()
     {
-        if (_actual_state == kLockedState) {
+        if (actual_state_ == kLockedState) {
             StateLocked_Coin();
         } else {
             StateUnlocked_Coin();
@@ -41,28 +42,26 @@ public:
 
 private:
     void StateLocked_Coin() {
-        _actual_state = kUnlockedState;
+        actual_state_ = kUnlockedState;
         printf("LockedState: Inserting Coin -> State transition\n");
     }
 
     void StateUnlocked_Coin() {
-        _actual_state = kUnlockedState;
+        actual_state_ = kUnlockedState;
         printf("UnlockedState: Inserting Coin -> Coin was already inserted.\n");
     }
  
     void StateLocked_Push() {
-        _actual_state = kLockedState;
+        actual_state_ = kLockedState;
         printf("LockedState: Go through turnstil -> LOCKED !!!\n");
     }
 
     void StateUnlocked_Push() {
-        _actual_state = kLockedState;
+        actual_state_ = kLockedState;
         printf("UnlockedState:  Go through turnstil. -> State Transition.\n");
     }
 
-
-    StateId _actual_state = kLockedState;
-
+    StateId actual_state_ = kLockedState;
 };
 
 // -------------------------------------------------
