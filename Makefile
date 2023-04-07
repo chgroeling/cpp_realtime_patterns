@@ -15,7 +15,7 @@ PATTERNS += repository/repository
 # -----------------------------------------------
 GENERATE_BIN = y
 
-CC_FLAGS = -O0  -std=c++17
+CC_FLAGS = -O2  -std=c++17
 
 TOOL_CHAIN_DIR =
 #TOOL_CHAIN_DIR = C:/Tools/gcc-arm-none-eabi-9-2019-q4-major/bin/

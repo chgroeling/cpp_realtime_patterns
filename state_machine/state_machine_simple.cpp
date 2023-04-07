@@ -65,7 +65,7 @@ private:
 };
 
 // -------------------------------------------------
-// CLient code ... uses statemachine
+// Client code ... uses statemachine
 // -------------------------------------------------
 void Client() {
     StateMachine sm(kLockedState);
