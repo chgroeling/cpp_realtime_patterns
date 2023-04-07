@@ -7,7 +7,6 @@ Real-time programming (on low-level devices) is mainly done in C and C++. Comput
 
 This repo is not intended to reproduce the 1000th repetition of software patterns this time in C++. Instead, I will try to reproduce the common software design patterns in a way that they are suitable for this form of programming.
 
-
 ## Assumptions
 * This repo contains only C++ code. Patterns implemented in C are not part of this repo. 
 * Dynamic memory allocation is largely avoided.
@@ -17,7 +16,7 @@ This repo is not intended to reproduce the 1000th repetition of software pattern
 ## Usage
 Each pattern is contained in a stand-alone cpp file. They can therefore be compiled directly on [Compiler explorer](https://godbolt.org/) without further dependencies. Just copy and past it!
 
-Furthermore is a Makefile that compiles each pattern with a "gnu" compiler. This Makefile also creates a dissassembly of each pattern object file. It is really amazing what a compiler does without the knowledge of its users. Have a look!
+There is also a Makefile in the root directory that compiles each pattern with any "gnu" c++ compiler. This Makefile also creates a dissassembly of each pattern object file. It is really amazing to see what a compiler does without the knowledge of its users. Take a look!
 
 ## Credits
 * This repo is largely inspired by [java-design-patterns](https://github.com/iluwatar/java-design-patterns).
