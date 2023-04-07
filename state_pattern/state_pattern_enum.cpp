@@ -10,10 +10,12 @@
 // -------------------------------------------------
 class IState {
 public:
-    /// @brief Try to go through the turnstil
+    virtual ~IState() {};
+    
+    // Try to go through the turnstil
     virtual void Push() = 0; 
 
-    /// @brief Try to insert a coin.
+    // Try to insert a coin.
     virtual void Coin() = 0;
 };
 
@@ -34,6 +36,7 @@ enum StateId {
 class LockedConcreteState : public IState {
 public:
     LockedConcreteState();
+    virtual ~LockedConcreteState();
     void SetContext(Context* context) ;
     void Push();
     void Coin();
@@ -47,6 +50,7 @@ private:
 class UnlockedConcreteState : public IState {
 public:
     UnlockedConcreteState();
+    virtual ~UnlockedConcreteState();
     void SetContext(Context* context);
     void Push();
     void Coin();
@@ -106,6 +110,8 @@ void Context::Coin() {
 // -------------------------------------------------
 LockedConcreteState::LockedConcreteState() {
 }
+LockedConcreteState::~LockedConcreteState() {
+}
 
 void LockedConcreteState::SetContext(Context* context) {
     context_ = context;
@@ -125,6 +131,10 @@ void LockedConcreteState::Coin() {
 // -------------------------------------------------
 UnlockedConcreteState::UnlockedConcreteState() {
 }
+
+UnlockedConcreteState::~UnlockedConcreteState() {
+}
+
 
 void UnlockedConcreteState::SetContext(Context* context) {
     context_ = context;

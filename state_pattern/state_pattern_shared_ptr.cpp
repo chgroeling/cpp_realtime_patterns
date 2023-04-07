@@ -12,10 +12,12 @@
 // -------------------------------------------------
 class IState {
 public:
-    /// @brief Try to go through the turnstil
+    virtual ~IState() {};
+    
+    // Try to go through the turnstil
     virtual void Push() = 0; 
 
-    /// @brief Try to insert a coin.
+    // Try to insert a coin.
     virtual void Coin() = 0;
 };
 
@@ -41,6 +43,7 @@ private:
 class LockedConcreteState : public IState {
 public:
     LockedConcreteState();
+    virtual ~LockedConcreteState();
     void SetContext(std::shared_ptr<Context> context) ;
     void Push();
     void Coin();
@@ -54,6 +57,7 @@ private:
 class UnlockedConcreteState : public IState {
 public:
     UnlockedConcreteState();
+    virtual ~UnlockedConcreteState();
     void SetContext(std::shared_ptr<Context> context);
     void Push();
     void Coin();
@@ -86,6 +90,9 @@ void Context::Coin() {
 LockedConcreteState::LockedConcreteState() {
 }
 
+LockedConcreteState::~LockedConcreteState() {
+}
+
 void LockedConcreteState::SetContext(std::shared_ptr<Context> context) {
     context_ = context;
 }
@@ -105,6 +112,9 @@ void LockedConcreteState::Coin() {
 // UnlockedConcreteState implementation
 // -------------------------------------------------
 UnlockedConcreteState::UnlockedConcreteState() {
+}
+
+UnlockedConcreteState::~UnlockedConcreteState() {
 }
 
 void UnlockedConcreteState::SetContext(std::shared_ptr<Context> context) {

@@ -1,8 +1,8 @@
 // ------------------------------------------------------------------
 // Tokenizer Pattern in C++
 //
-// An algorithmn which splits a string (const char* ) into tokens. 
-// No dynamic memory allocation is performed. 
+// An algorithmn which splits a string (const char* ) into tokens.
+// No dynamic memory allocation is performed.
 // ------------------------------------------------------------------
 #include <iostream>
 #include <cctype>
@@ -19,6 +19,8 @@ struct Token
 class ITokenizer
 {
 public:
+    virtual ~ITokenizer(){};
+
     // Returns the next available Token
     virtual Token NextToken() = 0;
 
@@ -32,6 +34,7 @@ class SimpleTokenizer : public ITokenizer
 {
 public:
     SimpleTokenizer(const char *input) : current(input) {}
+    virtual ~SimpleTokenizer(){};
 
     Token NextToken() override
     {

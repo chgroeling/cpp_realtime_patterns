@@ -13,7 +13,7 @@
 
 struct Entity
 {
-    // This is the handle to the DAO internal storage structure. 
+    // This is the handle to the DAO internal storage structure.
     // Never change this it is used by the DAO. I currently have no
     // good idea to hide it from the user without introducing a lot of runtime
     // overhead. Do you?
@@ -27,7 +27,7 @@ struct Entity
 // This keeps it clean of business logic.
 Entity MakeEntity(int token, int data)
 {
-    // Attention: -1 is assigned to indicate that the object has no valid 
+    // Attention: -1 is assigned to indicate that the object has no valid
     // index in a DAO.
     Entity f = {-1, token, data};
     return f;
@@ -45,10 +45,11 @@ enum ReturnCode : int
 class IEntityDAO
 {
 public:
-    virtual ReturnCode Add(const Entity &entity) = 0; // CRUD - C(reate)
+    virtual ~IEntityDAO(){};
+    virtual ReturnCode Add(const Entity &entity) = 0;                              // CRUD - C(reate)
     virtual ReturnCode GetFirstWithToken(int token, Entity &out_entity) const = 0; // CRUD - R(ead)
-    virtual ReturnCode Edit(const Entity &entity) = 0; // CRUD - U(pdate)
-    virtual ReturnCode Delete(const Entity &entity) = 0; // CRUD - D(elete)
+    virtual ReturnCode Edit(const Entity &entity) = 0;                             // CRUD - U(pdate)
+    virtual ReturnCode Delete(const Entity &entity) = 0;                           // CRUD - D(elete)
 };
 
 // Assumptions:
@@ -65,6 +66,7 @@ public:
             entities_[i].internal_id = kUnusedId; // assign unused id
         }
     }
+    virtual ~EntityDAO(){};
 
     ReturnCode Add(const Entity &entity) override
     {
@@ -78,7 +80,7 @@ public:
             return ret; // propagate return value;
         }
 
-        *own = entity; // copy it to internal data structure
+        *own = entity;          // copy it to internal data structure
         own->internal_id = idx; // set internal id to index
         return kSuccess;
     }
@@ -136,8 +138,8 @@ private:
         return kPoolExceeded;
     }
 
-    static constexpr int kUnusedId = -1; // use negative value as unused id
-    static constexpr int kMaxNumberOfEntities = 10;  // maximal number of storeable entities.
+    static constexpr int kUnusedId = -1;            // use negative value as unused id
+    static constexpr int kMaxNumberOfEntities = 10; // maximal number of storeable entities.
 
     // Statically allocate a pool of entities. This will throw away memory if too high and
     // leads to lots of problems if set to low ;-)
