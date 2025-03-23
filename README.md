@@ -1,4 +1,4 @@
-# Software design patterns in c++ with focus on realtime applications.
+# Software Design Patterns in C++ with a Focus on Real-Time Applications
 
 ## Introduction
 Design patterns offer standard solutions to frequently encountered issues in software design.
